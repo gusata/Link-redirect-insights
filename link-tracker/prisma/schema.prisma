@@ -1,8 +1,6 @@
 generator client {
   provider = "prisma-client-js"
-  output   = "../node_modules/@prisma/client"
 }
-
 
 datasource db {
   provider = "sqlite"
@@ -10,11 +8,9 @@ datasource db {
 }
 
 model Link {
-  id       Int    @id @default(autoincrement())
-  url      String
-  slug     String @unique
+  id        String   @id @default(cuid())
+  slug      String   @unique
+  url       String
   clicks    Int      @default(0)
   createdAt DateTime @default(now())
 }
-
-

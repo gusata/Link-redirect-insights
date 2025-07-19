@@ -1,9 +1,7 @@
-/** @type {import('next').NextConfig} */
-const nextConfig = {
-  typescript: {
-    // 🚨 Isso permite builds mesmo com erros TypeScript
-    ignoreBuildErrors: true,
-  },
+import type { NextConfig } from "next";
+
+const nextConfig: NextConfig = {
+  /* config options here */
 };
 
-module.exports = nextConfig;
+export default nextConfig;

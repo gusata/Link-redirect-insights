@@ -3,18 +3,19 @@ import { redirect } from 'next/navigation';
 
 const prisma = new PrismaClient();
 
-export default async function RedirectPage({ params }: { params: { slug: string } }) {
-  // Forçar aguardar (exemplo)
-  const slug = await Promise.resolve(params.slug);
+export default async function RedirectPage(context: { params: Promise<{ slug: string }> }) {
+  const { slug } = await context.params;
 
-  const link = await prisma.link.findFirst({
-  where: { slug },
-});
+  const link = await prisma.link.findUnique({
+    where: { slug },
+  });
 
+  if (!link) return redirect('/');
 
-  if (!link) {
-    return redirect('/'); // Se slug não existir, vai para home
-  }
+  await prisma.link.update({
+    where: { slug },
+    data: { clicks: { increment: 1 } },
+  });
 
-  redirect(link.url); // Redireciona para a URL original
+  redirect(link.url);
 }
