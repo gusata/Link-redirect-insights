@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "prisma generate && next build",
-    "start": "next start",
+    "start": "prisma generate @@ npm run build",
     "lint": "next lint"
   },
   "dependencies": {
