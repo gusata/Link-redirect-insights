@@ -5,12 +5,27 @@ import { nanoid } from 'nanoid';
 const prisma = new PrismaClient();
 
 export async function POST(req: Request) {
-  const { url } = await req.json();
-  const slug = nanoid(6);
+  try {
+    const body = await req.json();
 
-  const link = await prisma.link.create({
-    data: { slug, url },
-  });
+    if (!body?.url) {
+      return NextResponse.json({ error: 'URL não fornecida' }, { status: 400 });
+    }
 
-  return NextResponse.json({ short: `${process.env.BASE_URL}/${slug}` });
+    const slug = nanoid(6);
+
+    const link = await prisma.link.create({
+      data: { slug, url: body.url },
+    });
+
+    const baseUrl = process.env.BASE_URL || 'https://seusite.vercel.app'; // fallback
+
+    return NextResponse.json({ short: `${baseUrl}/${slug}` });
+  } catch (error) {
+    console.error('Erro em /api/shorten:', error);
+    return NextResponse.json(
+      { error: 'Erro interno ao encurtar URL' },
+      { status: 500 }
+    );
+  }
 }
