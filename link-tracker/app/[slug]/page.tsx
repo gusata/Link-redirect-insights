@@ -1,8 +1,11 @@
-import { prisma } from '../lib/prisma';
 import { redirect } from 'next/navigation';
+import { prisma } from '../lib/prisma'; // use singleton
 
-
-export default async function RedirectPage({ params }: { params: { slug: string } }) {
+export default async function RedirectPage({
+  params,
+}: {
+  params: { slug: string };
+}) {
   const { slug } = params;
 
   const link = await prisma.link.findUnique({
@@ -16,5 +19,5 @@ export default async function RedirectPage({ params }: { params: { slug: string 
     data: { clicks: { increment: 1 } },
   });
 
-  redirect(link.url);
+  return redirect(link.url); // ou apenas `redirect(link.url);` também funciona
 }
