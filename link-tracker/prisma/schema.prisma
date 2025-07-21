@@ -9,9 +9,10 @@ datasource db {
 
 
 model Link {
-  id        String   @id @default(cuid())
+  id        Int      @id @default(autoincrement())
   slug      String   @unique
   url       String
   clicks    Int      @default(0)
   createdAt DateTime @default(now())
 }
+
