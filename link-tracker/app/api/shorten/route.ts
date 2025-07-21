@@ -18,7 +18,7 @@ export async function POST(req: Request) {
       data: { slug, url: body.url },
     });
 
-    const baseUrl = process.env.BASE_URL || 'https://seusite.vercel.app'; // fallback
+    const baseUrl = process.env.BASE_URL || 'https://link-redirect-insights.vercel.app/'; // fallback
 
     return NextResponse.json({ short: `${baseUrl}/${slug}` });
   } catch (error) {
