@@ -2,8 +2,8 @@ import { prisma } from '../lib/prisma';
 import { redirect } from 'next/navigation';
 
 
-export default async function RedirectPage(context: { params: Promise<{ slug: string }> }) {
-  const { slug } = await context.params;
+export default async function RedirectPage({ params }: { params: { slug: string } }) {
+  const { slug } = params;
 
   const link = await prisma.link.findUnique({
     where: { slug },
