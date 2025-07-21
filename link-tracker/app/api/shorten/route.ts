@@ -19,9 +19,9 @@ export async function POST(req: Request) {
       data: { slug, url: body.url },
     });
 
-    const baseUrl = process.env.BASE_URL?.replace(/\/$/, '') || 'https://link-redirect-insights.vercel.app/';
-return NextResponse.json({ short: `${baseUrl}/${slug}` });
+    const baseUrl = process.env.BASE_URL || 'https://link-redirect-insights.vercel.app/'; // fallback
 
+    return NextResponse.json({ short: `${baseUrl}/${slug}` });
   } catch (error) {
     console.error('Erro em /api/shorten:', error);
     return NextResponse.json(
