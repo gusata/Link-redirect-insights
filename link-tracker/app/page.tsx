@@ -7,7 +7,7 @@ export default function Home() {
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-    const res = await fetch('/api/shorten',{
+    const res = await fetch('/api/shorten/',{
       method: 'POST',
       body: JSON.stringify({ url }),
       headers: { 'Content-Type': 'application/json' },
